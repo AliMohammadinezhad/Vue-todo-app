@@ -19,22 +19,21 @@
   </li>
 </template>
 
-<script>
-export default {
-  props: {
-    todo: Object
-  },
-  methods: {
-    deleteTodo() {
-      if (confirm('آیا از حذف اطمینان دارید؟')) {
-        this.$emit('deleted', this.todo.id)
-      }
-    },
-    changeStatus() {
-      this.$emit('changeStatus', this.todo.id, !this.todo.isCompleted)
-    }
+<script setup>
+import { defineProps, defineEmits } from 'vue'
+
+const props = defineProps({
+  todo: Object,
+})
+
+const emit = defineEmits(['deleted', 'changeStatus'])
+
+function deleteTodo() {
+  if (confirm('آیا از حذف اطمینان دارید؟')) {
+    emit('deleted', props.todo.id)
   }
 }
+function changeStatus() {
+  emit('changeStatus', props.todo.id, !props.todo.isCompleted)
+}
 </script>
-
-<style></style>
